@@ -21,22 +21,42 @@ from Agent import Agent
 
 class MyAI ( Agent ):
 
-    def __init__ ( self ):
+	def __init__ ( self ):
         # ======================================================================
         # YOUR CODE BEGINS
         # ======================================================================
-        
-        pass
+		self.curr = {"loc" : [1, 1], "d" : 0, "wall" : ["W", "S"], "state" : []}
+		self.face = "E"
+		self.path = []
+		self.gold = False
+		self.breeze = False
+		self.stench = False
+		self.glitter = False
+		self.back = False
+		self.tabu = []
+
         # ======================================================================
         # YOUR CODE ENDS
         # ======================================================================
 
-    def getAction( self, stench, breeze, glitter, bump, scream ):
+	def getAction( self, stench, breeze, glitter, bump, scream ):
         # ======================================================================
         # YOUR CODE BEGINS
         # ======================================================================
-        
-        return Agent.Action.CLIMB
+		self.path.append(self.curr)
+		if (stench or breeze) and self.curr == [1, 1]:
+			return Agent.Action.CLIMB
+		if glitter:
+			self.gold = True
+			return Agent.Action.GRAB
+		if not stench and not breeze and not glitter and not bump:
+			self.curr = [1, 1]
+			return Agent.Action.FORWARD
+		if bump:
+			return Agent.Action.TURN_LEFT
+
+		#if self.curr == [1, 1]:
+		#	return Agent.Action.CLIMB
         # ======================================================================
         # YOUR CODE ENDS
         # ======================================================================
@@ -44,7 +64,11 @@ class MyAI ( Agent ):
     # ======================================================================
     # YOUR CODE BEGINS
     # ======================================================================
-
+	def updateCurr( self ):
+		if self.face = "E":
+			self.curr["loc"][1] += 1
+		elif self.face = "W":
+			self.curr["loc"][1] -= 1
     
     # ======================================================================
     # YOUR CODE ENDS
